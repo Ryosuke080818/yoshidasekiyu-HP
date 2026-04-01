@@ -1068,7 +1068,7 @@
 
 /* ② サービス画像が中央に寄る問題の修正（左上へ確実に出す） */
 .service .service-item img {
-    width: 95% !important;
+    width: 92% !important;
     margin-top: -25px !important;  /* 上への突き出し */
     margin-right: -25px !important; /* 左への突き出し（ここをマイナスにして左上に固定） */
     margin-left: auto !important; /* 右側の余白を自動にして中央寄せを無効化 */
@@ -1083,7 +1083,7 @@
 /* スマホ版でも左上をキープ */
 @media (max-width: 991.98px) {
     .service .service-item img {
-        width: 95% !important;
+        width: 92% !important;
         margin-right: -30px !important;
         margin-left: auto !important;
     }
