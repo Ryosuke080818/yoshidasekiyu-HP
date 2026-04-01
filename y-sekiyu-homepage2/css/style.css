@@ -1013,13 +1013,6 @@
     .navbar-nav .nav-link[href="contact.html"] {
         margin-bottom: 12px !important;
     }
-
-    .service .service-item img {
-        margin-left: auto !important;
-        margin-right: -10px !important; /* カードの端より出す */
-        display: block !important;
-        width: 85% !important;
-    }
 }
 
 /* PC表示 */
@@ -1038,101 +1031,112 @@
     overflow: visible !important;
 }
 
-/* 背景 */
-.service-inner {
-    margin-top: 60px !important;
-    overflow: visible !important;
-    position: relative;
-    background: #ffffff;
-    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.4) !important;
-    border-top: 1px solid transparent !important;
-    padding-left: 10px !important; 
-    padding-right: 10px !important;
-    background: rgba(255, 255, 255, 0.7) !important;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px); /* Safari対応 */
-    transition: .5s;
-    z-index: 1;
+/* ホバー時の挙動（枠を白に変える） */
+.service-item:hover .service-inner::after {
+    border-color: #ffffff; /* 枠を白に変更 */
 }
 
-/* 飛び出させる大画像 */
+/* =========================================
+   修正版CSS（ここから下を追加）
+========================================= */
+
+/* ①＆④ 背景の隙間解消 ＆ フッターリンクが押せない問題の修正 */
+.parallax-bg-wrapper {
+    position: relative;
+    width: 100%;
+    z-index: 0 !important; /* マイナスにするとフッターリンクが押せなくなります */
+}
+
+.parallax-bg-wrapper::before {
+    content: "";
+    position: fixed;
+    /* 上下にゆとり(-10vh)を持たせ、iOS特有のアドレスバー増減による隙間を完全に塞ぐ */
+    top: -10vh; 
+    left: 0;
+    right: 0;
+    bottom: -10vh;
+    width: 100vw;
+    height: 120vh; /* 画面より20%大きくして確実に覆う */
+    background-image: url('../img/background.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1 !important; /* コンテンツの1つ奥へ */
+    pointer-events: none; /* 背景がクリックの邪魔をしないようにする */
+}
+
+
+/* ② サービス画像が中央に寄る問題の修正（左上へ確実に出す） */
 .service .service-item img {
     width: 90% !important;
-    margin-top: -25px !important;  /* カードの上端から50px上へ確実に突き出す */
-    margin-right: -25px !important;
-    margin-bottom: 15px;
-    width: calc(100% - 0px) !important;
-    margin-left: auto !important;
-    display: block;
+    margin-top: -25px !important;  /* 上への突き出し */
+    margin-right: -25px !important; /* 左への突き出し（ここをマイナスにして左上に固定） */
+    margin-left: auto !important; /* 右側の余白を自動にして中央寄せを無効化 */
+    margin-bottom: 15px !important;
+    display: block !important;
     position: relative;
     z-index: 10;
     box-shadow: 0 0px 15px rgba(0, 0, 0, 0.4) !important;
     padding-left: 0 !important;
 }
 
-/* オレンジ枠 */
+/* スマホ版でも左上をキープ */
+@media (max-width: 991.98px) {
+    .service .service-item img {
+        width: 90% !important;
+        margin-right: -30px !important;
+        margin-left: auto !important;
+    }
+}
+
+
+/* ③ サービス項目のホバー効果（オレンジ背景）が消えた問題の修正 */
+.service-inner {
+    margin-top: 60px !important;
+    overflow: visible !important;
+    position: relative;
+    background: rgba(255, 255, 255, 0.7) !important; /* すりガラス背景 */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.4) !important;
+    border-top: 1px solid transparent !important;
+    padding-left: 10px !important; 
+    padding-right: 10px !important;
+    transition: .5s;
+    z-index: 1;
+}
+
+/* ホバーでせり上がるオレンジ背景 */
+.service .service-inner::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 0;
+    left: 0;
+    bottom: 0;
+    transition: 1s;
+    background: #e94709 !important;
+    z-index: 0 !important; /* すりガラスより手前、文字より奥に配置 */
+}
+
+/* テキストがオレンジ背景に隠れないように最前面へ */
+.service-text, .service-item h5, .service-item p {
+    position: relative;
+    z-index: 2 !important; 
+}
+
+/* 内側のオレンジ枠線 */
 .service-inner::after {
     content: "";
     position: absolute;
-    /* 位置を少しずらして二重に見せる（数値はお好みで調整） */
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    border: 3px solid #e94709; /* オレンジ色の枠 */
-    z-index: 8; /* 白背景の後ろへ */
+    top: 10px; left: 10px; right: 10px; bottom: 10px;
+    border: 3px solid #e94709;
+    z-index: 3 !important; /* 枠線を最前面へ */
     transition: .5s;
+    pointer-events: none; /* 枠線がクリック判定を吸わないようにする */
 }
 
-/* ホバー時の挙動（枠を白に変える） */
+/* ホバー時のオレンジ枠線の挙動 */
 .service-item:hover .service-inner::after {
-    border-color: #ffffff; /* 枠を白に変更 */
-}
-
-/* --- 背景 --- */
-.parallax-bg-wrapper {
-    background-image: url('../img/background.png'); 
-    
-    /* 背景を固定 */
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    width: 100%;
-}
-/* --- 背景 --- */
-.parallax-bg-wrapper {
-    background-image: url('../img/background.png'); 
-    
-    /* 背景を固定 */
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    width: 100%;
-}
-
-/* iOS背景固定 */
-.parallax-bg-wrapper {
-    position: relative;
-    width: 100%;
-    z-index: -4;
-}
-
-/* 疑似要素を固定して背景を表現 */
-.parallax-bg-wrapper::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100svh;
-    background-image: url('../img/background.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    z-index: -5;
+    border-color: #ffffff;
 }
