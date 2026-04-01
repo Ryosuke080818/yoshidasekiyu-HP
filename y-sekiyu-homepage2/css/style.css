@@ -1015,9 +1015,7 @@
         margin-left: auto !important;
         margin-right: -10px !important; /* カードの端より出す */
         display: block !important;
-        
-        /* もし画像サイズが大きすぎて中央に見える場合は幅を微調整
-        width: 85% !important;  */
+        width: 85% !important;
     }
 }
 
@@ -1109,6 +1107,30 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    position: relative;
+    width: 100%;
+}
+
+/* スマホ背景　*/
+.page-background::before {
+    content: "";
+    position: fixed; /* 画面に固定 */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../img/background.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    /* 巨大化を防ぐ */
+    transform: translateZ(0); 
+}
+
+/* 既存の page-background 自体の背景指定は透明にする */
+.page-background {
+    background: transparent !important;
     position: relative;
     width: 100%;
 }
