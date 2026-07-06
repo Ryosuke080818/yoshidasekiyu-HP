@@ -1005,9 +1005,9 @@
     align-items: center;
     
     /* --- 【変更①】親要素（コンテナ）の左右余白を打ち消して画面端まで広げる --- */
-    width: calc(110% + 26px) !important; /* 左右12pxずつ（計24px）要素自体を広げる */
-    margin-left: -28px !important;       /* 左側の隙間を強制的に埋める */
-    margin-right: 2px !important;      /* 右側の隙間を強制的に埋める */
+    width: calc(110% + 32px) !important; /* 左右12pxずつ（計24px）要素自体を広げる */
+    margin-left: -30px !important;       /* 左側の隙間を強制的に埋める */
+    margin-right: -2px !important;      /* 右側の隙間を強制的に埋める */
     box-sizing: border-box;
 
     background-image: url('background_note.png') !important; 
